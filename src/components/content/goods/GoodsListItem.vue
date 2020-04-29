@@ -1,9 +1,7 @@
 <template>
- <div class="goods-item">
-   <a :href="goodsItem.link">
+ <div class="goods-item" @click="itemClick">
      <!-- @load代表加载完成之后出发方法imgLoad， -->
-      <img :src="goodsItem.show.img" alt="" @load="imgeLoad">
-   </a>
+      <img :src="getImg" alt="" @load="imgeLoad">
    <div class="goods-info">
      <p>{{goodsItem.title}}</p>
      <span class="price">{{goodsItem.price}}</span>
@@ -13,6 +11,7 @@
 </template>
 
 <script>
+
 export default {
   name:'GoodListItem',
   props:{
@@ -25,9 +24,28 @@ export default {
   },
   methods: {
     imgeLoad(){
+      // 通过在离开某组件的时候，取消其对事件的监听
       this.$bus.$emit('itemImageLoad')
+
+      // 通过路由的判断对各组件进行判断
+      // if(this.$route.path.indexOf('/home')){
+      //   this.$bus.$emit('homeitemImageLoad')
+      // }else if(this.$route.path.indexOf('/detail')){
+      //   this.$bus.$emit('detailItemImgLoad')
+      // }
+    },
+    itemClick(){
+      console.log('跳转到详情页');
+      console.log(this.goodsItem);
+      
+      this.$router.push('/detail'+ '/' + this.goodsItem.iid)
     }
   },
+  computed: {
+    getImg() {
+      return this.goodsItem.img || this.goodsItem.image || this.goodsItem.show.img
+      }
+    }
 }
 </script>
 

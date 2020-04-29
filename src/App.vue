@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!-- 使home一直处于活跃状态，缓存数据 -->
     <keep-alive include="home"><router-view></router-view></keep-alive>
     <main-tab-bar/>
   </div>
