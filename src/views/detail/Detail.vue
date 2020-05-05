@@ -40,6 +40,8 @@ import {getDetail, getrecommend, Goods, Shop, GoodsParam} from '@network/detail'
 import {debounce} from "@components/common/utils.js"
 import {itemListenerMixin,backTopMixin} from "@common/mixin"
 
+import { mapActions } from 'vuex'
+
 export default {
   name:'Detail',
   components:{
@@ -71,7 +73,7 @@ export default {
       themeTopYs:[],
       getThemeTop:null,
       currentIndex:0,
-      count:0
+      count:0,
     }
   },
   created() {
@@ -100,6 +102,8 @@ export default {
       if (res.result.rate.list) {
         this.commentInfo = res.result.rate.list[0];
       }
+      console.log(res);
+      
     }),
     // 3.请求推荐函数
     getrecommend().then(res => { 
@@ -138,6 +142,7 @@ export default {
     
   },
   methods: {
+    ...mapActions(['addCart']),
     imageLoad(){
       // 1.在子组件DetailInfo中使用条件判断
       // this.$refs.scroll.refresh()
@@ -182,13 +187,18 @@ export default {
       product.image = this.topImages[0]
       product.title = this.goods.title
       product.desc = this.goods.desc
-      product.price =this.goods.newPrice
+      product.price =this.goods.realPrice
       product.iid = this.iid
-      // product.count = this.count
-      console.log(product);
 
       // 2.将商品添加到购物车中
-      this.$store.commit('addCart',product)
+      // this.$store.commit('addCart',product)
+      this.addCart(product).then(res => {
+        this.$toast.show(res,1500)
+        console.log(this.$toast);
+      })
+      // this.$store.dispatch('addCart',product).then(res => {
+      //   console.log(res);
+      // })
       
     }
   },

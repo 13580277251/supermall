@@ -101,7 +101,7 @@ export default {
   },
   //只有存在keep-alive标签的时候activated()和deactivated()才会被执行
   activated() {
-    console.log(this.saveY+'activated');
+    // console.log(this.saveY+'activated');
     this.$refs.scroll.refresh()
     this.$refs.scroll.scrollTo(0,this.saveY,0)
   },
@@ -152,7 +152,7 @@ export default {
       // 传入要请求的页码
       const page = this.goods[type].page+1
       getHomeGoods(type,page).then(res => {
-      console.log(res);
+      // console.log(res);
       this.goods[type].list.push(...res.data.list)
       // 将前一页的数据取出之后，要把下次默认页码加一
       this.goods[type].page += 1

@@ -1,7 +1,7 @@
 <template>
  <div class="goods-item" @click="itemClick">
      <!-- @load代表加载完成之后出发方法imgLoad， -->
-      <img :src="getImg" alt="" @load="imgeLoad">
+      <img v-lazy="getImg" alt="" @load="imgeLoad">
    <div class="goods-info">
      <p>{{goodsItem.title}}</p>
      <span class="price">{{goodsItem.price}}</span>
